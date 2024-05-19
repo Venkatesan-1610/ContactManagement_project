@@ -1,0 +1,44 @@
+USE [employee]
+GO
+/****** Object:  StoredProcedure [dbo].[Update_Employee_Info]    Script Date: 20-05-2024 00:04:38 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[Update_Employee_Info]
+    @EmployeeID INT,
+    @FirstName VARCHAR(50),
+    @LastName VARCHAR(50),
+    @Email VARCHAR(100),
+    @Address VARCHAR(MAX),
+    @City VARCHAR(50),
+    @State VARCHAR(50),
+    @Country VARCHAR(50),
+    @PostalCode INT,
+    @PhoneNumber VARCHAR(20),
+    @Longitude FLOAT,
+    @Latitude FLOAT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    UPDATE Employee_Details
+    SET
+        First_Name = @FirstName,
+        Last_Name = @LastName,
+        Email_Id = @Email,
+        Address = @Address,
+        City = @City,
+        State = @State,
+        Country = @Country,
+        Postal_Code = @PostalCode,
+        Phone_Number = @PhoneNumber,
+        Longitude = @Longitude,
+        Latitude = @Latitude
+    WHERE EmployeeID = @EmployeeID;
+
+    -- Return the updated row
+    SELECT *
+    FROM Employee_Details
+    WHERE EmployeeID = @EmployeeID;
+END;

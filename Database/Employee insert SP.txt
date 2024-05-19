@@ -1,0 +1,50 @@
+USE [employee]
+GO
+/****** Object:  StoredProcedure [dbo].[Insert_Employee_Info]    Script Date: 20-05-2024 00:03:59 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[Insert_Employee_Info] 
+    @FirstName VARCHAR(50),
+    @LastName VARCHAR(50),
+    @Email VARCHAR(100),
+    @Address VARCHAR(MAX),
+    @City VARCHAR(50),
+    @State VARCHAR(50),
+    @Country VARCHAR(50),
+    @PostalCode INT,
+    @PhoneNumber VARCHAR(20),
+    @Longitude FLOAT,
+    @Latitude FLOAT
+AS
+BEGIN
+
+    SET NOCOUNT ON;
+
+	IF EXISTS (SELECT 1 FROM Employee_Details WHERE email_Id = @Email)
+    BEGIN
+        DECLARE @ErrorMessage NVARCHAR(4000)
+        SELECT @ErrorMessage = 'The email ID ' + @Email + ' is already inserted.'
+        RAISERROR (@ErrorMessage, 16, 1)
+        RETURN
+    END
+
+    INSERT INTO Employee_Details  
+    OUTPUT inserted.*
+    VALUES (
+        @FirstName,
+        @LastName,
+        @Email,
+        @Address,
+        @City,
+        @State,
+        @Country,
+        @PostalCode,
+        @PhoneNumber,
+        @Longitude,
+        @Latitude
+    );
+
+	SET @ErrorMessage = NULL;
+END;

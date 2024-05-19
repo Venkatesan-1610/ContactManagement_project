@@ -1,0 +1,14 @@
+CREATE TABLE Employee_Details (
+    EmployeeID INT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Email VARCHAR(100),
+    Address VARCHAR(MAX),
+    City VARCHAR(50),
+    State VARCHAR(50),
+    Country VARCHAR(50),
+    PostalCode INT,
+    PhoneNumber VARCHAR(20),
+    Longitude FLOAT,
+    Latitude FLOAT
+);
